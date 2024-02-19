@@ -19,6 +19,6 @@ export default async function middleware( request:NextRequest, response: NextRes
     }
 }
 
-export const matcher = {
+export const matcher = {  
     matcher: ['/']
 }
