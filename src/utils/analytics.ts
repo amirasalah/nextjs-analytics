@@ -1,3 +1,4 @@
+import { getDate } from '@/utils';
 import {redis} from '../lib/redis';
 
 type AnalyticsArgs = {
@@ -19,10 +20,13 @@ export class Analytics {
         let key  = `analytics::${namespace}`;
 
         if(!options?.persist){
-            key+= `::${Date.now()}`;
+            key+= `::${getDate()}`;
         }
 
         await redis.hincrby(key, JSON.stringify(event), 1);
+        if(!options?.persist){
+            await redis.expire(key, this.retention);
+        }
     }
 }
 
