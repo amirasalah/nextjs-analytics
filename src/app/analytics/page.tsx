@@ -1,9 +1,13 @@
+import { analytics } from '@/utils/analytics'
 import React from 'react'
 
-const Analytics = () => {
-  return (
-    <div>Analytics</div>
+const Analytics = async () => {
+  const data = await analytics.retrieve("pageView", '29/02/2024')
+
+  return(
+    <p className='text-white'>{JSON.stringify(data)}</p>
   )
+  
 }
 
-export default Analytics
+export default Analytics 

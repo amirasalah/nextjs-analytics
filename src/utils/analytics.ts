@@ -28,6 +28,18 @@ export class Analytics {
             await redis.expire(key, this.retention);
         }
     }
+
+    async retrieve(namespace:string, date: string) {
+        const data = await redis.hgetall<Record<string, string>>(`analytics::${namespace}::${date}`);
+
+        console.log(data);
+        return {
+            date,
+            events: Object.entries(data ?? []).map(([key, value]) => ({
+                [key]: value
+            }))
+        }
+    }
 }
 
 export const analytics = new Analytics();
